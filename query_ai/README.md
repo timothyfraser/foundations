@@ -112,3 +112,111 @@ Wrap the R script into a function: query_llama(prompt)
 Write a Shiny app to explore model outputs
 
 Include prompt templating and logging
+
+
+
+
+Here are 3 easier alternatives, ranked from easiest to most flexible, and all still 100% free:
+
+
+---
+
+🥇 Easiest: Use Ollama
+
+> Zero setup, works on Mac/Windows/Linux, local GPU or CPU, and exposes a REST API.
+
+
+
+🔧 1. Install Ollama (takes 1 minute)
+
+Go to: https://ollama.com/download
+
+Install the app (it runs in the background and exposes a local API)
+
+
+💾 2. Pull a Model
+
+ollama pull mistral
+
+> Other options: llama2, gemma, codellama, phi, etc.
+
+
+
+🚀 3. Run the Model
+
+Just type:
+
+ollama run mistral
+
+Or just have it idle in the background — the REST API stays live.
+
+
+---
+
+🧪 4. Query Ollama from R
+
+Here’s an R script that just works, assuming ollama is running:
+
+library(httr2)
+library(jsonlite)
+
+res <- request("http://localhost:11434/api/generate") %>%
+  req_body_json(list(
+    model = "mistral",
+    prompt = "Explain systems engineering in two sentences.",
+    stream = FALSE
+  )) %>%
+  req_method("POST") %>%
+  req_perform()
+
+output <- resp_body_json(res)
+cat(output$response)
+
+> ✅ Works out of the box
+✅ Cross-platform
+✅ No API key, no credentials, no Python
+✅ You can install it in labs, give students a portable script, or run in class
+
+
+
+
+---
+
+🥈 Runner-Up: LM Studio (GUI) + Localhost API
+
+GUI app to run models locally (e.g., GGUF versions of Mistral, LLaMA2)
+
+Also exposes a local API on port 1234
+
+Slightly more manual but no CLI required
+
+
+URL: https://lmstudio.ai
+
+
+---
+
+🥉 Still Viable: HuggingFace Inference Endpoint (Free Tiers)
+
+Use transformers or text-generation pipeline via HuggingFace API
+
+Some small open models are free under the community pool
+
+Still requires API keys and internet
+
+
+
+---
+
+✅ Recommendation for Your Class
+
+Go with Ollama + R client:
+
+It's as close to plug-and-play as local LLMs get
+
+No huggingface accounts
+
+No API cost
+
+Easy to include in your foundations repo
+
