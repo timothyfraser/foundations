@@ -1,30 +1,18 @@
 # foundations
-Course repository for SYSEN 5151: Foundations of Systems Engineering at Cornell University
+
+*Course repository for SYSEN 5151: Foundations of Systems Engineering at Cornell University*
 
 This repository contains starter materials and scaffolding for Foundations of Systems Engineering. Students will build end-to-end skills for modern systems development by completing exercises in four key areas, each located in a separate folder.
 
-You may use R, Python, or another language/framework of your choosing. Lessons and starter code will be provided in R and/or Python.
-
+You may use Python, R, or another language/framework of your choosing. Lessons and starter code will be provided in R and/or Python. You may even mix and match at times, writing an API in python and an App in R, etc.
 
 ---
 
 # 🔍 1. Query a Database
 
-Learn how to retrieve data from different types of sources:
+Learn how to retrieve data from dynamically updated databases, eg. Google Sheets, SQLite, MySQL, PostgreSQL, etc.
 
-Static databases (easy):
-
-.csv, .xlsx, or Google Sheets.
-
-
-Dynamic databases (moderate):
-
-Google Sheets → SQLite → MySQL or SQL.
-
-
-
-You'll write scripts that connect, retrieve, and clean the data for further use.
-
+You'll write scripts that connect, retrieve, and clean the data for further use. Our examples will focus on Google Sheets, due to its ease of use.
 
 ---
 
@@ -32,21 +20,10 @@ You'll write scripts that connect, retrieve, and clean the data for further use.
 
 Learn to interact with LLM APIs. Choose from:
 
-Meta’s LLaMA (harder setup, free):
-
-Open-source, but you'll need to configure models yourself.
-
-
-OpenAI or Gemini APIs (easy setup, paid):
-
-Students must pay per call — this is your textbook cost.
-
-Requires a credit card.
-
-Optionally, you can apply for discounted API credits via Cornell’s AI support program (we'll provide details).
-
-
-
+| Option | Setup Difficulty | Cost | Notes |
+|--------|------------------|------|-------|
+| **Meta's LLaMA** | Harder | Free | Open-source, but you'll need to configure models yourself |
+| **OpenAI/Gemini APIs** | Easy | Paid per call | Students must pay per call — this is your textbook cost. Requires a credit card. 
 
 ---
 
@@ -54,13 +31,12 @@ Optionally, you can apply for discounted API credits via Cornell’s AI support 
 
 Connect your data and models through a local or hosted REST API:
 
-Python → FastAPI
-
-R → plumber
-
+| Language | Framework | Description |
+|----------|-----------|-------------|
+| **Python** | FastAPI | Modern, fast web framework for building APIs |
+| **R** | `plumber` | R package for creating web APIs |
 
 This is the bridge between your data logic and front-end or other systems.
-
 
 ---
 
@@ -68,15 +44,12 @@ This is the bridge between your data logic and front-end or other systems.
 
 You'll design a simple front-end interface to display or interact with results. Options include:
 
-- R/Python → ShinyApps (easy, less performant)
-
-- ‘Reporter’ static site (easiest)
-
-- Command-line chatbot (mid-level, fast)
-
-- ReactJS app (most work, most polish — good for public-facing projects)
-
-
+| Option | Difficulty | Performance | Best For |
+|--------|------------|-------------|----------|
+| **ShinyApps** | Easy | Less performant | Quick prototypes |
+| **'Reporter' static site** | Easiest | Fast | Simple documentation |
+| **Command-line chatbot** | Mid-level | Fast | Backend-focused projects |
+| **ReactJS app** | Most work | High performance | Public-facing projects with polish |
 
 ---
 
@@ -93,25 +66,21 @@ You'll design a simple front-end interface to display or interact with results. 
 
 Each folder contains a standalone mini-project. You're encouraged to explore alternate tools and integrate components together as your final system.
 
-
 ---
 
 # 🚨 Requirements
 
-- Basic knowledge of R or Python
-
-- A Google account for Google Sheets access
-
-- A credit card for API usage (if using OpenAI/Gemini)
-
-- Recommended: GitHub account, local dev environment
-
-
+| Requirement | Type | Notes |
+|-------------|------|-------|
+| Basic knowledge of R or Python | Required | Core programming skills |
+| Google account for Google Sheets access | Required | For database exercises |
+| Credit card for API usage (if using OpenAI/Gemini) | Required | Textbook cost equivalent |
+| GitHub account, local dev environment | Recommended | For version control and development |
 
 ---
 
 # 💬 Questions?
 
-Reach out via Canvas or use EdDiscussions. You're not expected to know everything upfront — the point is to try, fail, fix, and learn.
+Reach out via Canvas or use EdDiscussion. You're not expected to know everything upfront — the point is to **try**, **fail**, **fix**, and **learn**!
 
 
