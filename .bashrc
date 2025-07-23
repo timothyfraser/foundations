@@ -3,23 +3,18 @@
 # Local .bashrc for this repository
 # This file contains project-specific bash configurations
 
-# Add Ollama to PATH for this project
-export PATH="$PATH:/c/Users/tmf77/AppData/Local/Programs/Ollama"
+# Add LM Studio to PATH for this project (here's mine)
+export PATH="$PATH:/c/Users/tmf77/.lmstudio/bin"
+alias lms='/c/Users/tmf77/.lmstudio/bin/lms.exe'
 
-# Ollama environment variables
-# Set the host and port for Ollama API
-export OLLAMA_HOST="127.0.0.1:11435"
-# Allow all origins (useful for web interfaces)
-export OLLAMA_ORIGINS="*"
-# Set the models directory
-# export OLLAMA_MODELS="/path/to/your/models"
-# Enable debug logging
-export OLLAMA_DEBUG=1
+# Add R to your Path for this project (here's mine)
+export PATH="$PATH:/c/Program Files/R/R-4.4.1/bin"
+alias Rscript='/c/Program Files/R/R-4.4.1/bin/Rscript.exe'
+# Add R libraries to your path for this project (here's mine)
+export R_LIBS_USER="/c/Users/tmf77/AppData/Local/R/win-library/4.2"
 
-# You can add other project-specific configurations here
-# For example:
-# export PROJECT_ROOT="$(pwd)"
-# export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
+# Add Python to your Path for this project (here's mine)
+export PATH="$PATH:/c/Python312"
+alias python='/c/Python312/python.exe'
 
-echo "✅ Local .bashrc loaded - Ollama is now available as 'ollama' command"
-echo "   OLLAMA_HOST set to: $OLLAMA_HOST" 
+echo "✅ Local .bashrc loaded - LMStudio is now available as 'lms' command"

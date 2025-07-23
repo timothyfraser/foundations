@@ -2,107 +2,128 @@
 
 ## ✅ Goal
 
-Run a free, local LLM (e.g., LLaMA, Mistral, or Gemma) and query it from R using httr or curl via an API exposed on your machine.
-
-🥇 Easiest: Use Ollama
-
-> Zero setup, works on Mac/Windows/Linux, local GPU or CPU, and exposes a REST API.
+Run a free, local LLM (e.g., Gemma) and query it from R or Python using the LM Studio REST API exposed on your machine.
 
 
-## 🔧 1. Install Ollama (takes 1 minute)
+## 🔧 1. Install LM Studio (takes 1 minute)
 
-Go to: https://ollama.com/download
+Go to: https://lmstudio.ai/download
 
 Install the app (it runs in the background and exposes a local API)
 
-![Install Ollama](../images/ollama_setup.png) 
 
+## 2. Set LM Studio to PATH
 
-## Set Ollama to PATH
-
-Second, you'll want to find the path to the `ollama` program, and add it to your PATH. This will allow you to run the ollama command from any directory, by just typing `ollama <your subsequent commands here>` in the terminal.
-
-Note: If you get "command not found" error, this is because Git Bash doesn't automatically recognize the `ollama` command.
-
-Fortunately, our repository has a project specific `.bashrc` file that we can load in once per session to set all the command paths.
-
-Update your `.bashrc` script to include the following line (or equivalent):
-
-```bash
-export PATH="$PATH:/c/Users/<yournetid>/AppData/Local/Programs/Ollama"
-```
-
-Now run your `.bashrc` in the terminal as:
+This repository provides a project-specific `.bashrc` to make the `lms` command available in your terminal. You must run it once every session. To activate it:
 
 ```bash
 source .bashrc
-ollama --version # now this will work!
+lms --version # now this will work!
 ```
 
-
-💾 2. Pull a Model
+The `.bashrc` includes:
 
 ```bash
-ollama run gemma3
+export PATH="$PATH:/c/Users/tmf77/.lmstudio/bin"
+alias lms='/c/Users/tmf77/.lmstudio/bin/lms.exe'
 ```
 
-![Pull and Run Ollama](../images/ollama_pull.png) 
-
-> Other options: llama2, gemma, codellama, phi, etc.
-
-
-
-🚀 3. Run the Model
-
-Just type:
+You can also include local paths to Python and/or R to make sure your project is correctly configured. (But remember to install them first!) Wondering what the correct path is for your system? Run the `which <program>` command. For example:
 
 ```bash
-ollama run mistral
+which python
 ```
 
-Or just have it idle in the background — the REST API stays live.
+```bash
+which R
+```
+
+## 💾 3. Start the LM Studio Server
+
+Start the server on port 1234. This kicks off a local REST API service that you can send API queries
+
+```bash
+lms server start --port 1234
+```
+
+Check server status:
+
+```bash
+lms server status
+```
+
+Check available models on your local machine. (Open LM Studio to download more manually.)
+
+```bash
+curl http://localhost:1234/api/v0/models
+```
+
+Load a model (e.g., Gemma):
+
+```bash
+lms load gemma-3-1b
+```
 
 
----
+## 🚀 4. Query the Model from R or Python
 
-🧪 4. Query Ollama from R
+Next, open `01_startup.sh` to run all these steps and then run an R or Python script from the terminal.
+Either of these will send a POST API query to the LM Studio REST API service, using R or Python. 
+Here's a brief example of the basic syntax.
 
-Here’s an R script that just works, assuming ollama is running:
+### R Example (using httr2)
 
 ```r
 library(httr2)
 library(jsonlite)
 
-res <- request("http://localhost:11434/api/generate") %>%
-  req_body_json(list(
-    model = "mistral",
-    prompt = "Explain systems engineering in two sentences.",
-    stream = FALSE
-  )) %>%
+body <- list(
+  model = "google/gemma-3-1b",
+  messages = list(
+    list(role = "system", content = "Always answer in rhymes."),
+    list(role = "user", content = "Introduce yourself.")
+  ),
+  temperature = 0.7,
+  max_tokens = -1,
+  stream = FALSE
+)
+
+res <- request("http://localhost:1234/api/v0/chat/completions") %>%
+  req_body_json(body) %>%
   req_method("POST") %>%
   req_perform()
 
 output <- resp_body_json(res)
-cat(output$response)
+cat(output$choices[[1]]$message$content)
 ```
 
-> ✅ Works out of the box
-✅ Cross-platform
-✅ No API key, no credentials, no Python
-✅ You can install it in labs, give students a portable script, or run in class
+### Python Example (using requests)
 
+```python
+import requests
+
+url = "http://localhost:1234/api/v0/chat/completions"
+payload = {
+    "model": "google/gemma-3-1b",
+    "messages": [
+        {"role": "system", "content": "Always answer in rhymes."},
+        {"role": "user", "content": "Introduce yourself."}
+    ],
+    "temperature": 0.7,
+    "max_tokens": -1,
+    "stream": False
+}
+headers = {"Content-Type": "application/json"}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json()["choices"][0]["message"]["content"])
+```
 
 ---
 
 # Further Learning
 
-🥈 LM Studio (GUI) + Localhost API
-
-GUI app to run models locally (e.g., GGUF versions of Mistral, LLaMA2)
-
-Also exposes a local API on port 1234
-
-Slightly more manual but no CLI required
-
-URL: https://lmstudio.ai
+- LM Studio CLI: https://lmstudio.ai/docs/cli
+- REST API: https://lmstudio.ai/docs/app/api/endpoints/rest
+- Headless mode: https://lmstudio.ai/docs/app/api/headless
 
