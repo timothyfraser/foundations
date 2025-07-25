@@ -1,30 +1,37 @@
+# 01_read_from_db.R
+
+# R script to read in a PUBLIC, VIEWABLE Google Sheet as CSV
+# Only uses dplyr and readr (no authentication required)
+
 # Load required packages
-library(googlesheets4)
 library(dplyr)
 library(readr)
-library(janitor)   # for clean_names()
 
-# ---- Step 1: Authenticate ----
-# Will prompt to open a browser and log into Google (first time only)
-gs4_auth()
+# ---- Step 1: Define the CSV download link ----
+# This must be a public Google Sheet link, formatted as /export?format=csv
+path = "http://docs.google.com/spreadsheets/d/1k_4SZ-6achILnMD-tHU1PdrM7ppQgizJtyV4gf0b1wk/export?format=csv&gid=317348432"
 
-# ---- Step 2: Define Sheet URL ----
-# Replace this with the actual URL of the private shared Google Sheet
-sheet_url <- "https://docs.google.com/spreadsheets/d/your-sheet-id-here"
-
-# Optional: specify a worksheet/tab name
-sheet_name <- "Data"  # or leave blank to use the first sheet
-
-# ---- Step 3: Read the Sheet ----
-df <- read_sheet(sheet_url, sheet = sheet_name)
-
-# ---- Step 4: Clean and View ----
-df_clean <- df %>%
-  clean_names() %>%
-  filter(if_any(everything(), ~ !is.na(.)))  # remove fully blank rows
+# ---- Step 2: Read the CSV from the URL ----
+df = read_csv(path)
 
 # Preview structure
-glimpse(df_clean)
+glimpse(df)
+
+# ---- Step 4: Clean and View ----
+df_clean = df %>%
+  # rename columns
+  select(timestamp = 1, type = 2, satisfaction = 3, failed = 4, date_failed = 5) %>%
+  # remove any blank rows (eg. missing a timestamp)
+  filter(!is.na(timestamp))
 
 # ---- Step 5: Save Local Copy ----
-write_csv(df_clean, "local_copy.csv")
+write_csv(df_clean, "query_db/responses.csv")
+
+# ---- Step 6: Test Read the Data ---
+data = read_csv("query_db/responses.csv")
+
+# Check result
+glimpse(data)
+
+# Cleanup!
+rm(list = ls())
