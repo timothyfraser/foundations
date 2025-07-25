@@ -17,4 +17,7 @@ export R_LIBS_USER="/c/Users/tmf77/AppData/Local/R/win-library/4.2"
 export PATH="$PATH:/c/Python312"
 alias python='/c/Python312/python.exe'
 
-echo "✅ Local .bashrc loaded - LMStudio is now available as 'lms' command"
+# Add uvicorn to your Path for this project - if using Python for APIs (here's mine)
+export PATH="$PATH:/c/Users/tmf77/AppData/Roaming/Python/Python312/Scripts"
+
+echo "✅ Local .bashrc loaded."

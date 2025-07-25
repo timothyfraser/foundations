@@ -24,3 +24,9 @@ resp$status_code # 200 = success
 resp_body_json(resp)
 # Convert JSON to R list object
 fromJSON(resp_body_json(resp))
+
+# Clear environment
+rm(list = ls())
+
+# Exit
+# q(save = "no")

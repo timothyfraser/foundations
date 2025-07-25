@@ -1,4 +1,10 @@
-# main.py
+# app.py
+
+# API application run in FastAPI with Python. Expects to be run from apps/api2py working directory
+
+# Install relevant packages in terminal if necessary
+# !pip install fastapi pydantic typing pandas 
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -16,7 +22,7 @@ app.add_middleware(
 )
 
 # Load mtcars dataset (with model names as column)
-mtcars = pd.read_csv("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
+mtcars = pd.read_csv("mtcars.csv")
 mtcars["model"] = mtcars["model"] if "model" in mtcars.columns else mtcars.index.astype(str)
 
 @app.get("/filter")

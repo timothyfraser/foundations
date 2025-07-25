@@ -10,9 +10,10 @@
 # Headers and data are included as needed for each request
 
 # ---
-# 1. GET request with query parameters
-#    Fetches users on page 1, with id=5 (note: this API ignores id in query string)
-curl -X GET "https://reqres.in/api/users?page=1&id=5"
+# 1. GET request (simplest version, only works when no headers required)
+#    Fetches user whose id is 2, using specific endpoint /api/users/2
+curl -X GET "https://reqres.in/api/users/2"
+
 
 # ---
 # 2. GET request with custom header
@@ -20,8 +21,14 @@ curl -X GET "https://reqres.in/api/users?page=1&id=5"
 curl -X GET "https://reqres.in/api/users/2" \
      -H "x-api-key: reqres-free-v1"
 
+# 3. GET request with query parameters
+#    Fetches users on page 1, with id=5 (note: this API ignores id in query string)
+curl -X GET "https://reqres.in/api/users?page=1&id=5" \
+     -H "x-api-key: reqres-free-v1"
+
+
 # ---
-# 3. POST request to create a new user
+# 4. POST request to create a new user
 #    Sends JSON data with name and job fields
 curl -X POST "https://reqres.in/api/users" \
      -H "Content-Type: application/json" \
@@ -29,7 +36,7 @@ curl -X POST "https://reqres.in/api/users" \
      -d '{"name": "Ada Lovelace", "job": "engineer"}'
 
 # ---
-# 4. More API Call Method Examples
+# 5. More API Call Method Examples
 #    (Uncomment any line to try it)
 
 # GET: Fetch a user by ID

@@ -1,10 +1,12 @@
-# plumber.R
+# app.R
+
 library(plumber)
 library(jsonlite)
+library(dplyr)
+library(readr)
 
 # Load dataset once
-data("mtcars")
-mtcars$model <- rownames(mtcars)
+mtcars = read_csv("mtcars.csv")
 
 #* @apiTitle mtcars filter API
 
@@ -13,13 +15,17 @@ mtcars$model <- rownames(mtcars)
 #* @param gear:number Number of gears
 #* @get /filter
 function(cyl, gear) {
-  cyl <- as.numeric(cyl)
-  gear <- as.numeric(gear)
+  mycyl <- as.numeric(cyl)
+  mygear <- as.numeric(gear)
   
   # Filter data
-  filtered <- subset(mtcars, cyl == cyl & gear == gear)
+  filtered = mtcars %>% filter(cyl == mycyl & gear == mygear)
   
   # Reset rownames for JSON export
   rownames(filtered) <- NULL
-  toJSON(filtered, pretty = TRUE, dataframe = "rows")
+
+  # Export to json
+  output = toJSON(filtered, pretty = TRUE, dataframe = "rows")
+
+  return(output)
 }

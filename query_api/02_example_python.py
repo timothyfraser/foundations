@@ -19,3 +19,8 @@ print(response.status_code) # 200 = success!
 # Extract the response as a JSON
 print(response.json())
 
+# Clear environment
+globals.clear()
+
+# Exit
+# exit()

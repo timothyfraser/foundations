@@ -1,5 +1,9 @@
 # Load the shiny package
 library(shiny)
+library(readr)
+library(dplyr)
+
+mtcars = read_csv("mtcars.csv")
 
 # Define the UI
 ui <- fluidPage(

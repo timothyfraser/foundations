@@ -8,6 +8,10 @@ This folder contains simple examples to help you make your first API calls using
 - Python
 - R
 
+You may consult [**this Google Slides presentation for a introduction to making API calls**](https://docs.google.com/presentation/d/1BYC2KujLtMvbIBffU0aUg-vlMYpa__XOj_9Z13XBpUg/edit?usp=sharing).
+
+![Slides Overview](../images/slides1.PNG)
+
 ## Prerequisites: Install the Tools
 
 Before running the examples, make sure you have the following installed:

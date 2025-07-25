@@ -1,12 +1,12 @@
+# README `/api1py`
+
 # Import core shiny components
 from shiny import App, render, ui, reactive
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the mtcars dataset (manually since it's not in seaborn)
-mtcars = pd.read_csv(
-    "https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv"
-)
+mtcars = pd.read_csv("mtcars.csv")
 
 # Add row names as a column if needed
 mtcars.reset_index(drop=True, inplace=True)

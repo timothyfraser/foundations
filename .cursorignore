@@ -9,3 +9,5 @@
 **/*.wav
 **/*.ogg
 **/*.flac
+**/__pycache__
+**/_pycache_
