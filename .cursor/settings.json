@@ -1,0 +1,20 @@
+{
+  "terminal.integrated.profiles.osx": {
+    "Git Bash": {
+      "path": "/bin/bash",
+      "args": ["-l"],
+      "icon": "terminal-bash"
+    },
+    "Python": {
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "args": ["-i"],
+      "icon": "terminal-python"
+    },
+    "R": {
+      "path": "/usr/local/bin/R",
+      "args": ["--vanilla"],
+      "icon": "terminal-r"
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "Git Bash"
+} 
