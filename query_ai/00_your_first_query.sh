@@ -5,6 +5,9 @@
 # Load your local paths and variables
 source .bashrc
 
+# Check if the server is running
+lms server status
+
 # Learn about the Command Line Interface
 # https://lmstudio.ai/docs/cli
 
@@ -17,6 +20,9 @@ source .bashrc
 # First, open up LM Studio, select a model, and download it.
 # Then, specify the model name here, assigning it to the variable 'MODEL'
 MODEL="gemma-3-1b"
+# If you want to use the built-in text-embedding-nomic-embed-text-v1.5 model, uncomment the line below
+# MODEL="nomic-ai/text-embedding-nomic-embed-text-v1.5-GGUF"
+
 
 # Start the server on port 1234
 lms server start --port 1234
@@ -29,6 +35,7 @@ curl http://localhost:1234/api/v0/models
 
 # Load a model (may take a moment)
 lms load $MODEL
+
 
 # Send your first CURL request to the model via REST API!
 curl http://localhost:1234/api/v0/chat/completions \
@@ -48,6 +55,7 @@ curl http://localhost:1234/api/v0/chat/completions \
 
 # At end of session, unload any llm models
 lms unload --all
+
 
 # Close down the service
 lms server stop

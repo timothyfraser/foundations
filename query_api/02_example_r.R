@@ -22,8 +22,6 @@ resp = req_perform(req)
 resp$status_code # 200 = success
 # Return response as a json
 resp_body_json(resp)
-# Convert JSON to R list object
-fromJSON(resp_body_json(resp))
 
 # Clear environment
 rm(list = ls())

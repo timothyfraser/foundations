@@ -18,7 +18,7 @@ This repository provides a project-specific `.bashrc` to make the `lms` command 
 
 ```bash
 source .bashrc
-lms --version # now this will work!
+lms --help # now this will work!
 ```
 
 The `.bashrc` includes:

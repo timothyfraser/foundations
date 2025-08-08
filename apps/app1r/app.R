@@ -14,12 +14,12 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       # Select input for number of cylinders
-      selectInput("cyl", "Select number of cylinders:",
+      selectInput(inputId = "cyl", label = "Select number of cylinders:",
                   choices = sort(unique(mtcars$cyl)),
                   selected = 4),
       
       # Select input for number of gears
-      selectInput("gear", "Select number of gears:",
+      selectInput(inputId = "gear", label = "Select number of gears:",
                   choices = sort(unique(mtcars$gear)),
                   selected = 4)
     ),
