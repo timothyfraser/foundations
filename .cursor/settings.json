@@ -1,86 +1,20 @@
 {
-  // ============================================================================
-  // CURSOR TERMINAL SETUP GUIDE
-  // ============================================================================
-  // 
-  // This configuration sets up custom terminal profiles for Git Bash, Python, and R
-  // in Cursor IDE for macOS.
-  //
-  // SETUP INSTRUCTIONS:
-  // ===================
-  // 1. Copy this entire configuration to your Cursor settings:
-  //    - Open Cursor
-  //    - Press Cmd+, to open Settings
-  //    - Click "Open Settings (JSON)" in the top right
-  //    - Paste this configuration
-  //    - Save the file
-  //
-  // 2. Alternative: Create this file at .cursor/settings.json in your project
-  //    for workspace-specific settings
-  //
-  // 3. After saving, restart Cursor or open a new terminal
-  //
-  // 4. Select your preferred terminal from the dropdown in the terminal panel
-  // ============================================================================
-
-  // Terminal Profiles Configuration
-  // These profiles will appear in the terminal dropdown menu
   "terminal.integrated.profiles.osx": {
-    
-    // GIT BASH PROFILE
-    // ================
-    // Provides a bash shell with Git integration and login environment
-    // - Includes PATH updates and environment variables
-    // - Useful for Git operations and general development
     "Git Bash": {
       "path": "/bin/bash",
       "args": ["-l"],
       "icon": "terminal-bash"
     },
-
-    // PYTHON INTERACTIVE PROFILE
-    // ==========================
-    // Starts Python in interactive mode for development and testing
-    // - Launches Python REPL directly
-    // - Useful for quick Python testing and debugging
-    // - Path may need adjustment based on your Python installation
     "Python": {
       "path": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
       "args": ["-i"],
       "icon": "terminal-python"
     },
-
-    // R INTERACTIVE PROFILE
-    // ====================
-    // Starts R in vanilla mode for statistical computing
-    // - Launches R REPL directly
-    // - Vanilla mode ensures clean environment (no saved workspace)
-    // - Path may need adjustment based on your R installation
     "R": {
       "path": "/usr/local/bin/R",
       "args": ["--vanilla"],
       "icon": "terminal-r"
     }
   },
-
-  // Default Terminal Profile
-  // Sets Git Bash as the default terminal when opening new terminals
-  "terminal.integrated.defaultProfile.osx": "Git Bash",
-
-  // ============================================================================
-  // TROUBLESHOOTING
-  // ============================================================================
-  // 
-  // If terminals don't work:
-  // 1. Check if paths exist: which python3, which R, which bash
-  // 2. Update paths in the configuration above
-  // 3. Common Python paths:
-  //    - /usr/bin/python3 (system Python)
-  //    - /opt/homebrew/bin/python3 (Homebrew Python)
-  //    - /Library/Frameworks/Python.framework/Versions/X.X/bin/python3
-  // 4. Common R paths:
-  //    - /usr/local/bin/R (Homebrew R)
-  //    - /Library/Frameworks/R.framework/Resources/bin/R (R.app)
-  //    - /opt/homebrew/bin/R (Apple Silicon Homebrew)
-  // ============================================================================
+  "terminal.integrated.defaultProfile.osx": "Git Bash"
 } 

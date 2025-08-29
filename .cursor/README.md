@@ -30,8 +30,6 @@ This directory contains Cursor IDE settings for custom terminal profiles.
 1. **Open a new terminal**: `Cmd + Shift + P` → "Terminal: Create New Terminal"
 2. **Switch terminal type**: Click the dropdown in the terminal panel and select your preferred terminal
 3. **Default terminal**: Git Bash is set as the default
-4. **Install dependencies**: Refer to the setup/dependencies.sh
-
 
 ## Troubleshooting
 
@@ -45,4 +43,3 @@ If terminals don't work:
 - **Git Bash**: `bash -l`
 - **Python**: `python3 -i`
 - **R**: `R --vanilla` 
-
