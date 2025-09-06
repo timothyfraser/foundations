@@ -8,7 +8,7 @@ This documentation file provide a guide on how to get set up for this course on 
 - [ ] Install [LM Studio](https://lmstudio.ai/download)
 - [ ] Install [Python](https://www.python.org/downloads/) or [R](https://cran.r-project.org/bin/windows/base/) (if you installed RStudio, R got installed with it.)
 - [ ] Install your IDE (Interactive Development Environment): [VS Code](https://code.visualstudio.com/download) or [Cursor](https://cursor.com/) (1 year free for students) or [RStudio](https://posit.co/download/rstudio-desktop/)
-* Open Cursor
+- [ ] Open Cursor
 - [ ] Update `.bashrc`
 - [ ] Open `git bash` terminal and load your settings with `source .bashrc`
 - [ ] Run `source setup/dependencies.sh` to load R and/or Python dependencies.
