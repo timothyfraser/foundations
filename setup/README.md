@@ -19,21 +19,13 @@ By the end of this setup, you will have:
   - **What you get:** Git Bash (command line interface) and Git GUI
   - **Why you need it:** You'll use Git to clone course repositories, submit assignments, and track your code changes
 
-### Step 2: Choose and Install Your IDE (Code Editor)
-- **Install your preferred IDE:**
-  - **[VS Code](https://code.visualstudio.com/download)** - Free, lightweight, and highly customizable
-  - **[Cursor](https://cursor.com/)** - AI-powered editor with built-in AI assistance (1 year free for students)
-  - **[RStudio](https://posit.co/download/rstudio-desktop/)** - Specialized for R development with excellent data science features
-
-**💡 Recommendation:** We highly recommend **Cursor** for this course as it provides AI assistance that can help you learn and debug code more effectively.
-
-### Step 3: Install LM Studio (Local AI Assistant)
+### Step 2: Install LM Studio (Local AI Assistant)
 - **Download and install [LM Studio](https://lmstudio.ai/download)**
   - **What is LM Studio?** A desktop application that allows you to run large language models locally on your computer
   - **Why you need it:** Provides AI assistance even when you're offline, helps with code explanations, and offers privacy for your code
   - **How it helps:** You can ask questions about your code, get debugging help, and learn programming concepts
 
-### Step 4: Install Programming Languages
+### Step 3: Install Programming Languages
 - **Install [Python](https://www.python.org/downloads/)**
   - **What is Python?** A versatile programming language widely used in data science, web development, and automation
   - **Installation tip:** Make sure to check "Add Python to PATH" during installation
@@ -44,7 +36,15 @@ By the end of this setup, you will have:
   - **Note:** If you installed RStudio, R is automatically included
   - **Verify installation:** Open RStudio or type `R --version` in terminal
 
-### Step 5: Configure Your Shell Environment
+### Step 4: Choose and Install Your IDE (Code Editor)
+- **Install your preferred IDE:**
+  - **[VS Code](https://code.visualstudio.com/download)** - Free, lightweight, and highly customizable
+  - **[Cursor](https://cursor.com/)** - AI-powered editor with built-in AI assistance (1 year free for students)
+  - **[RStudio](https://posit.co/download/rstudio-desktop/)** - Specialized for R development with excellent data science features
+
+**💡 Recommendation:** We highly recommend **Cursor** for this course as it provides AI assistance that can help you learn and debug code more effectively.
+
+### Step 5: (In your Code Editior, e.g.Cursor) Configure Your Shell Environment
 - **Update your `.bashrc` file**
   - **What is .bashrc?** A configuration file that runs commands every time you open a new terminal session
   - **Why update it?** Ensures your development tools are properly configured and accessible
@@ -184,7 +184,7 @@ source .bashrc
 
 ### Problem: LM Studio not starting or crashing
 **Solution:**
-1. Make sure your computer meets the minimum system requirements
+1. Make sure your computer meets the minimum system requirements (If you're using MAC+Intel, you can use Ollama instead: https://ollama.com/)
 2. Update your graphics drivers
 3. Try running LM Studio as administrator
 4. Check if your antivirus is blocking the application
