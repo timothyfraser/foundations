@@ -2,18 +2,18 @@
 
 # dependencies.sh
 
-# Installs all R and python3 dependencies for this repository
+# Installs all R and Python dependencies for this repository
 # Run this script from the project root: bash setup/dependencies.sh
 
 # --- SYSTEM DEPENDENCIES ---
-# python3 and R must be installed manually on Windows.
-# Download python3: https://www.python3.org/downloads/
+# Python and R must be installed manually on Windows.
+# Download Python: https://www.python.org/downloads/
 # Download R: https://cran.r-project.org/bin/windows/base/
-# (Recommended: python3 3.12, R 4.4.1)
+# (Recommended: Python 3.12, R 4.4.1)
 
-# --- python3 DEPENDENCIES ---
-# Ensure python3 is available
-python3 --version || echo "⚠️ python3 not found. Please install python3 manually."
+# --- PYTHON DEPENDENCIES ---
+# Ensure python is available
+python --version || echo "⚠️ Python not found. Please install Python manually."
 
 
 # --- PIP INSTALLATION (if missing) ---
@@ -22,22 +22,22 @@ if ! command -v pip &> /dev/null; then
   echo "⚠️ pip not found. Attempting to install pip..."
   # Download get-pip.py
   curl -O https://bootstrap.pypa.io/get-pip.py
-  # Try to use python3 to install pip
-  python3 get-pip.py
+  # Try to use python to install pip
+  python get-pip.py
   # Clean up
   rm get-pip.py
   # Re-check pip
-  pip3 --version || echo "❌ pip installation failed. Please install pip manually: https://pip.pypa.io/en/stable/installation/"
+  pip --version || echo "❌ pip installation failed. Please install pip manually: https://pip.pypa.io/en/stable/installation/"
 else
   echo "✅ pip is already installed."
 fi
 
 # Ensure pip is available
-pip3 --version || echo "⚠️ pip not found. Please ensure pip is installed."
+pip --version || echo "⚠️ pip not found. Please ensure pip is installed."
 
-# Install python3 packages
-pip3 install --upgrade pip
-pip3 install fastapi uvicorn pydantic pandas requests matplotlib shiny
+# Install Python packages
+pip install --upgrade pip
+pip install fastapi uvicorn pydantic pandas requests matplotlib shiny
 
 # --- R DEPENDENCIES ---
 # Ensure R is available
@@ -49,5 +49,4 @@ R -q -e 'install.packages(c(
 ), repos="https://cloud.r-project.org")'
 
 # --- DONE ---
-echo "✅ All dependencies installation commands have been run. If you see errors above, please install python3 and R manually first."
-
+echo "✅ All dependencies installation commands have been run. If you see errors above, please install Python and R manually first."
