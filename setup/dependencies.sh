@@ -50,4 +50,3 @@ R -q -e 'install.packages(c(
 
 # --- DONE ---
 echo "✅ All dependencies installation commands have been run. If you see errors above, please install Python and R manually first."
-
