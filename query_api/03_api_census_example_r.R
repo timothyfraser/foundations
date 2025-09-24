@@ -4,7 +4,7 @@ library(dplyr)
 library(tidycensus)
 
 # Set Census API Key (only required once)
-census_api_key("084d43073bf8f19070a746588fbda8c6b0472adc", install = TRUE)
+census_api_key("Your_Census_API_Key", install = TRUE, overwrite = TRUE)
 
 # Define variables for census data retrieval
 variables <- c(
@@ -172,5 +172,16 @@ print(combined_data$ny_census_data, n = 50)  # Show 100 rows
 print(combined_data$income_summary, n = 50)
 print(combined_data$age_summary, n = 50)
 
+# Save data as CSV files for easy access
+cat("\n=== SAVING DATA AS CSV FILES ===\n")
+write.csv(combined_data$ny_census_data, "census_data_readable.csv", row.names = FALSE)
+write.csv(combined_data$income_summary, "income_summary_readable.csv", row.names = FALSE)
+write.csv(combined_data$age_summary, "age_summary_readable.csv", row.names = FALSE)
+
+cat("Data saved as:\n")
+cat("- combined_census_data.rds (R binary format)\n")
+cat("- census_data_readable.csv (main census data)\n")
+cat("- income_summary_readable.csv (income breakdown by county)\n")
+cat("- age_summary_readable.csv (age distribution by county)\n")
 
 #readRDS("combined_census_data.rds")
