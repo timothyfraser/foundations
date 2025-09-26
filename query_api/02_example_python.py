@@ -20,7 +20,7 @@ print(response.status_code) # 200 = success!
 print(response.json())
 
 # Clear environment
-globals.clear()
+globals().clear()
 
 # Exit
 # exit()
