@@ -64,6 +64,143 @@ AGE_VARS = [
     "B01001_044", "B01001_045", "B01001_046", "B01001_047", "B01001_048", "B01001_049",
 ]
 
+HEADERS = {
+    "Accept": "application/json",
+    "User-Agent": "swathi-acs-script/1.0 (+https://example.com)"
+}
+
+
+def chunked(seq, size):
+    """Yield successive slices from seq of length <= size."""
+    for i in range(0, len(seq), size):
+        yield seq[i:i + size]
+
+def _request_json(params):
+    # Debug
+    print(f"Making request to: {BASE_URL}")
+    print(f"Parameters: {params}")
+    if "get" in params and "for" in params and "in" in params:
+        full_url = f"{BASE_URL}?get={params['get']}&for={params['for']}&in={params['in']}&key={params.get('key','')[:10]}..."
+        print(f"Full URL: {full_url}")
+
+    try:
+        resp = requests.get(BASE_URL, params=params, headers=HEADERS, timeout=120)
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Request error: {e}")
+
+    ctype = (resp.headers.get("Content-Type") or "").lower()
+    if "application/json" not in ctype:
+        text_preview = resp.text[:500]
+        if "invalid key" in text_preview.lower():
+            raise RuntimeError(
+                "Census API returned an HTML 'Invalid Key' page. "
+                "This can happen with long queries. We’ll retry in smaller chunks.\n"
+                "If it persists on tiny queries too, recheck CENSUS_API_KEY."
+            )
+        raise RuntimeError(
+            "Unexpected non-JSON response from Census API.\n"
+            f"Content-Type: {ctype}\nPreview:\n{text_preview}"
+        )
+
+    try:
+        return resp.json()
+    except ValueError as e:
+        raise RuntimeError(f"Failed to decode JSON: {e}\nPreview:\n{resp.text[:500]}")
+
+
+def api_fetch_dataframe(var_codes, chunk_size=20):
+    """
+    Fetches variables with estimates+MOEs in chunks and returns the long (tidy) DataFrame.
+    """
+    api_key = require_api_key()
+
+    # we’ll accumulate long-format rows for all chunks
+    long_all = []
+
+    for chunk in chunked(var_codes, chunk_size):
+        params = {
+            "get": build_get_params(chunk),  # NAME + Es + Ms
+            "for": "county:*",
+            "in": f"state:{STATE_FIPS}",
+            "key": api_key,
+        }
+        data = _request_json(params)
+        if not data or not isinstance(data, list) or not data[0]:
+            raise RuntimeError("Empty or malformed JSON payload from Census API.")
+
+        cols = data[0]
+        rows = data[1:]
+        df = pd.DataFrame(rows, columns=cols)
+        df["GEOID"] = df["state"] + df["county"]
+
+        # reshape to long using VARIABLES_MAP (only those present in this chunk)
+        for pretty_name, code in VARIABLES_MAP.items():
+            if code not in chunk:
+                continue
+            est_col = f"{code}E"
+            moe_col = f"{code}M"
+            if est_col in df.columns:
+                sub = df[["GEOID", "NAME", est_col]].copy()
+                sub.rename(columns={est_col: "estimate"}, inplace=True)
+                sub["moe"] = pd.to_numeric(df.get(moe_col), errors="coerce") if moe_col in df.columns else None
+                sub["variable"] = pretty_name
+                sub["estimate"] = pd.to_numeric(sub["estimate"], errors="coerce")
+                long_all.append(sub[["GEOID", "NAME", "variable", "estimate", "moe"]])
+
+    if not long_all:
+        # Fallback: nothing matched VARIABLES_MAP → return empty but valid structure
+        return pd.DataFrame(columns=["GEOID", "NAME", "variable", "estimate", "moe"])
+
+    # Concatenate all chunk results
+    out = pd.concat(long_all, ignore_index=True)
+    # Optional: drop duplicates in case of overlaps
+    out = out.drop_duplicates(subset=["GEOID", "variable"], keep="last")
+    return out
+
+
+def api_fetch_wide(var_codes, chunk_size=20):
+    """
+    Fetches estimate (E) columns in chunks and left-joins them into one wide frame.
+    """
+    api_key = require_api_key()
+
+    base_df = None
+    for i, chunk in enumerate(chunked(var_codes, chunk_size)):
+        params = {
+            "get": ",".join(["NAME"] + [f"{v}E" for v in chunk]),
+            "for": "county:*",
+            "in": f"state:{STATE_FIPS}",
+            "key": api_key,
+        }
+        data = _request_json(params)
+        if not data or not isinstance(data, list) or not data[0]:
+            raise RuntimeError("Empty or malformed JSON payload from Census API.")
+
+        cols = data[0]
+        rows = data[1:]
+        df = pd.DataFrame(rows, columns=cols)
+        df["GEOID"] = df["state"] + df["county"]
+
+        # numeric conversion for this chunk
+        for v in chunk:
+            col = f"{v}E"
+            if col in df.columns:
+                df[col] = pd.to_numeric(df[col], errors="coerce")
+
+        if base_df is None:
+            base_df = df
+        else:
+            # Merge on stable keys. Keep NAME/state/county from the left (first chunk)
+            keep_cols = ["GEOID", "state", "county"]
+            value_cols = [c for c in df.columns if c not in keep_cols + ["NAME"]]
+            base_df = base_df.merge(df[keep_cols + value_cols], on=keep_cols, how="left")
+
+    if base_df is None:
+        # Return an empty frame with expected minimal columns
+        return pd.DataFrame(columns=["NAME", "state", "county", "GEOID"])
+
+    return base_df
 
 def require_api_key() -> str:
     api_key = os.getenv("CENSUS_API_KEY")
@@ -79,65 +216,6 @@ def build_get_params(var_codes):
     var_ms = [f"{v}M" for v in var_codes]
     get_fields = ["NAME"] + var_es + var_ms
     return ",".join(get_fields)
-
-
-def api_fetch_dataframe(var_codes):
-    api_key = require_api_key()
-    params = {
-        "get": build_get_params(var_codes),
-        "for": "county:*",
-        "in": f"state:{STATE_FIPS}",
-        "key": api_key,
-    }
-    resp = requests.get(BASE_URL, params=params, timeout=120)
-    resp.raise_for_status()
-    data = resp.json()
-    cols = data[0]
-    rows = data[1:]
-    df = pd.DataFrame(rows, columns=cols)
-    # Build GEOID and convert numeric fields
-    df["GEOID"] = df["state"] + df["county"]
-    # Melt to long format for each variable
-    long_rows = []
-    for pretty_name, code in VARIABLES_MAP.items():
-        if code not in var_codes:
-            continue
-        est_col = f"{code}E"
-        moe_col = f"{code}M"
-        if est_col in df.columns:
-            sub = df[["GEOID", "NAME", est_col]].copy()
-            sub.rename(columns={est_col: "estimate"}, inplace=True)
-            sub["moe"] = pd.to_numeric(df.get(moe_col), errors="coerce") if moe_col in df.columns else None
-            sub["variable"] = pretty_name
-            sub["estimate"] = pd.to_numeric(sub["estimate"], errors="coerce")
-            long_rows.append(sub[["GEOID", "NAME", "variable", "estimate", "moe"]])
-    if long_rows:
-        return pd.concat(long_rows, ignore_index=True)
-    # If no pretty-mapped vars, return wide df
-    return df
-
-
-def api_fetch_wide(var_codes):
-    api_key = require_api_key()
-    params = {
-        "get": ",".join(["NAME"] + [f"{v}E" for v in var_codes]),
-        "for": "county:*",
-        "in": f"state:{STATE_FIPS}",
-        "key": api_key,
-    }
-    resp = requests.get(BASE_URL, params=params, timeout=120)
-    resp.raise_for_status()
-    data = resp.json()
-    cols = data[0]
-    rows = data[1:]
-    df = pd.DataFrame(rows, columns=cols)
-    df["GEOID"] = df["state"] + df["county"]
-    # Convert numeric columns
-    for v in var_codes:
-        col = f"{v}E"
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
-    return df
 
 
 def compute_income_summary(df_wide):
