@@ -57,6 +57,11 @@ Check available models on your local machine. (Open LM Studio to download more m
 ```bash
 curl http://localhost:1234/api/v0/models
 ```
+Get the model (e.g., Gemma):
+
+```bash
+lms get gemma-3-1b
+```
 
 Load a model (e.g., Gemma):
 
