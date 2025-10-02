@@ -38,7 +38,7 @@ curl -s -X POST "http://localhost:${PORT}/api/chat" \
 # 4) Run ONE of your workflows
 
 # Option A: Python
-python query_ai/01_workflow.py
+python query_ai/01_workflow_ollama.py
 
 # Option B: R
 # R -q -e 'source("query_ai/01_workflow.R")'
