@@ -22,10 +22,10 @@ lms --help # now this will work!
 ```
 
 The `.bashrc` includes:
-
+**Important Note:** Edit the bashrc file lines to have your username.
 ```bash
-export PATH="$PATH:/c/Users/tmf77/.lmstudio/bin"
-alias lms='/c/Users/tmf77/.lmstudio/bin/lms.exe'
+export PATH="$PATH:/c/Users/<username>/.lmstudio/bin"
+alias lms='/c/Users/<username>/.lmstudio/bin/lms.exe'
 ```
 
 You can also include local paths to Python and/or R to make sure your project is correctly configured. (But remember to install them first!) Wondering what the correct path is for your system? Run the `which <program>` command. For example:
