@@ -13,6 +13,9 @@ source .bashrc
 # SELECT MODEL
 MODEL="gemma-3-1b"
 
+# Get the model (may take a moment)
+lms get $MODEL
+
 # Load a model (may take a moment)
 lms load $MODEL
 
@@ -27,8 +30,13 @@ python query_ai/01_workflow.py
 
 # OR
 
-# Option 2: Run in R 01_workflow.R, quietly (-q) with this expression (-e), 
-R -q -e 'source("query_ai/01_workflow.R")'
+# Option 1: Run in Python3 01_workflow.py   ------------ UNCOMMENT THE LINE BELOW TO RUN IN PYTHON3------------
+#python3 query_ai/01_workflow.py
+
+# OR
+
+# Option 2: Run in R 01_workflow.R, quietly (-q) with this expression (-e),  ------------ UNCOMMENT THE LINE BELOW TO RUN IN R------------
+#R -q -e 'source("query_ai/01_workflow.R")'
 
 # Close down the service (if desired)
 lms server stop
