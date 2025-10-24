@@ -1,4 +1,4 @@
-# README `/api1py`
+# README `/app1py`
 
 # Import core shiny components
 from shiny import App, render, ui, reactive

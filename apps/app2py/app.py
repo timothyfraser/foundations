@@ -1,15 +1,20 @@
 from shiny import App, render, ui, reactive
 import pandas as pd
 import matplotlib.pyplot as plt
-import requests
 
-# Define dropdown choices
-unique_cyl = [4, 6, 8]
-unique_gear = [3, 4, 5]
+# Load the mtcars dataset
+mtcars = pd.read_csv("mtcars.csv")
+
+# Add row names as a column if needed
+mtcars.reset_index(drop=True, inplace=True)
+
+# Unique sorted values for dropdowns
+unique_cyl = sorted(mtcars["cyl"].unique())
+unique_gear = sorted(mtcars["gear"].unique())
 
 # Shiny UI
 app_ui = ui.page_fluid(
-    ui.panel_title("mtcars via FastAPI"),
+    ui.panel_title("mtcars Data Explorer"),
     ui.layout_sidebar(
         ui.panel_sidebar(
             ui.input_select("cyl", "Select number of cylinders:",
@@ -32,11 +37,9 @@ def server(input, output, session):
 
     @reactive.calc
     def filtered_data():
-        url = f"http://localhost:8000/filter?cyl={input.cyl()}&gear={input.gear()}"
-        res = requests.get(url)
-        res.raise_for_status()
-        data = pd.DataFrame(res.json())
-        return data
+        cyl_val = int(input.cyl())
+        gear_val = int(input.gear())
+        return mtcars[(mtcars["cyl"] == cyl_val) & (mtcars["gear"] == gear_val)]
 
     @output
     @render.text
