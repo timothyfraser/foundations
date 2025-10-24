@@ -1,3 +1,7 @@
+# IMPORTANT: Change the working directory path below to match your system
+# Replace "/Users/ginayp/foundations/apps/app1r" with your actual path to this folder
+setwd("/Users/ginayp/foundations/apps/app1r")
+
 # Load the shiny package
 library(shiny)
 library(readr)
