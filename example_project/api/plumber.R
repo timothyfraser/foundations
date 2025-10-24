@@ -3,13 +3,17 @@
 # R script to read in a PUBLIC, VIEWABLE Google Sheet as CSV
 # Only uses dplyr and readr (no authentication required)
 
+# IMPORTANT: Change the working directory path below to match your system
+# Replace "/Users/ginayp/foundations/example_project/api" with your actual path to this folder
+setwd("/Users/ginayp/foundations/example_project/api")
+
 # Load required packages
 library(plumber, quietly = TRUE, warn.conflicts = FALSE)
 library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(readr, quietly = TRUE, warn.conflicts = FALSE)
-library(httr2, quietly = TRUE, warn.conflicts = FALSE)    # For HTTP requests
+# library(httr2, quietly = TRUE, warn.conflicts = FALSE)    # For HTTP requests - commented out for now
 library(jsonlite, quietly = TRUE, warn.conflicts = FALSE) # For working with JSON
-library(knitr, quietly = TRUE, warn.conflicts = FALSE) # For creating markdown tables
+# library(knitr, quietly = TRUE, warn.conflicts = FALSE) # For creating markdown tables - commented out for now
 
 #* @apiTitle REST API
 #* @apiDescription REST API to read and analyze a PUBLIC, VIEWABLE Google Sheet as CSV

@@ -1,5 +1,9 @@
 # app.R
 
+# IMPORTANT: Change the working directory path below to match your system
+# Replace "/Users/ginayp/foundations/apps/api2r" with your actual path to this folder
+setwd("/Users/ginayp/foundations/apps/api2r")
+
 library(plumber)
 library(jsonlite)
 library(dplyr)
@@ -24,8 +28,6 @@ function(cyl, gear) {
   # Reset rownames for JSON export
   rownames(filtered) <- NULL
 
-  # Export to json
-  output = toJSON(filtered, pretty = TRUE, dataframe = "rows")
-
-  return(output)
+  # Return the data frame directly - Plumber will handle JSON conversion
+  return(filtered)
 }
