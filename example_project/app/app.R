@@ -4,7 +4,7 @@
 
 # IMPORTANT: Change the working directory path below to match your system
 # Replace "/Users/ginayp/foundations/example_project/app" with your actual path to this folder
-setwd("/Users/ginayp/foundations/example_project/app")
+setwd("example_project/app")
 
 library(shiny)
 library(httr)

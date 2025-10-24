@@ -5,7 +5,7 @@
 
 # IMPORTANT: Change the working directory path below to match your system
 # Replace "/Users/ginayp/foundations/example_project/api" with your actual path to this folder
-setwd("/Users/ginayp/foundations/example_project/api")
+setwd("example_project/api")
 
 # Load required packages
 library(plumber, quietly = TRUE, warn.conflicts = FALSE)
