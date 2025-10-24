@@ -9,4 +9,4 @@ FOLDER="$(git rev-parse --show-toplevel)" && \
     # Set working directory to apps/app2py
     cd "$FOLDER/apps/app2py" && \
     # Load the app
-    shiny run --reload app.py
+    shiny run --reload app.py --port 8010

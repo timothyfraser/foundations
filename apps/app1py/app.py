@@ -16,22 +16,19 @@ unique_cyl = sorted(mtcars["cyl"].unique())
 unique_gear = sorted(mtcars["gear"].unique())
 
 # Define UI
-app_ui = ui.page_fluid(
-    ui.panel_title("mtcars Data Explorer"),
-
-    ui.layout_sidebar(
-        ui.panel_sidebar(
-            ui.input_select("cyl", "Select number of cylinders:",
-                            choices=[str(c) for c in unique_cyl], selected="4"),
-            ui.input_select("gear", "Select number of gears:",
-                            choices=[str(g) for g in unique_gear], selected="4"),
-        ),
-        ui.panel_main(
-            ui.output_text("row_count_text"),
-            ui.output_plot("mpg_plot"),
-            ui.tags.h4("Previous Row Count:"),
-            ui.output_text("last_row_count")
-        )
+app_ui = ui.page_sidebar(
+    ui.sidebar(
+        ui.input_select("cyl", "Select number of cylinders:",
+                        choices=[str(c) for c in unique_cyl], selected="4"),
+        ui.input_select("gear", "Select number of gears:",
+                        choices=[str(g) for g in unique_gear], selected="4"),
+    ),
+    ui.card(
+        ui.card_header("mtcars Data Explorer"),
+        ui.output_text("row_count_text"),
+        ui.output_plot("mpg_plot"),
+        ui.tags.h4("Previous Row Count:"),
+        ui.output_text("last_row_count")
     )
 )
 
